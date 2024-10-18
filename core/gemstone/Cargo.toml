@@ -1,0 +1,32 @@
+[package]
+edition = "2021"
+name = "gemstone"
+version = "0.1.1"
+
+[lib]
+crate-type = [
+    "staticlib", # iOS
+    "rlib",      # for Other crate
+    "cdylib",    # Android
+]
+
+name = "gemstone"
+
+[dependencies]
+primitives = { path = "../crates/primitives" }
+gem_cosmos = { path = "../crates/gem_cosmos" }
+gem_solana = { path = "../crates/gem_solana" }
+gem_ton = { path = "../crates/gem_ton" }
+gem_bsc = { path = "../crates/gem_bsc" }
+gem_evm = { path = "../crates/gem_evm" }
+gem_sui = { path = "../crates/gem_sui" }
+
+# uniffi
+uniffi.workspace = true
+thiserror.workspace = true
+
+anyhow.workspace = true
+base64.workspace = true
+
+[build-dependencies]
+uniffi = { workspace = true, features = ["build"] }

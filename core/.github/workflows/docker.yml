@@ -1,0 +1,28 @@
+name: Docker Build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  docker_build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Clean space
+        run: ./free_disk_space.sh
+        working-directory: scripts
+
+      - name: Docker Build
+        run: |
+          docker build --tag core .

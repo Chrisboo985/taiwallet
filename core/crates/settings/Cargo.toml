@@ -1,0 +1,9 @@
+[package]
+name = "settings"
+version = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+typeshare = { workspace = true }
+serde = { workspace = true }
+config = { workspace = true }

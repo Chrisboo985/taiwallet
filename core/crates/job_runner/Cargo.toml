@@ -1,0 +1,8 @@
+[package]
+name = "job_runner"
+version = "1.0.0"
+edition = { workspace = true }
+
+[dependencies]
+tokio = { workspace = true }
+chrono = { workspace = true }

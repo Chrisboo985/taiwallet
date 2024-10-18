@@ -1,0 +1,9 @@
+[package]
+name = "gem_cosmos"
+version = { workspace = true }
+edition = { workspace = true }
+
+[dependencies]
+
+bech32 = { workspace = true }
+anyhow = { workspace = true }

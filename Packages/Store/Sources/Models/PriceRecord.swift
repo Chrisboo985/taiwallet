@@ -1,0 +1,57 @@
+// Copyright (c). TAIWallet Wallet. All rights reserved.
+
+import Foundation
+import Primitives
+import GRDB
+
+public struct PriceRecord: Codable, FetchableRecord, PersistableRecord  {
+    
+    public static let databaseTableName: String = "prices"
+
+    public var assetId: String
+    public var price: Double
+    public var priceChangePercentage24h: Double
+}
+
+extension PriceRecord: CreateTable {
+    static func create(db: Database) throws {
+        try db.create(table: Self.databaseTableName, ifNotExists: true) {
+            $0.column("assetId", .text)
+                .primaryKey()
+                .references(AssetRecord.databaseTableName, onDelete: .cascade)
+            $0.column("price", .numeric)
+            $0.column("priceChangePercentage24h", .numeric)
+        }
+    }
+}
+
+extension PriceRecord: Identifiable {
+    public var id: String { assetId }
+}
+
+extension AssetPrice {
+    var record: PriceRecord {
+        return PriceRecord(
+            assetId: assetId,
+            price: price,
+            priceChangePercentage24h: priceChangePercentage24h
+        )
+    }
+}
+
+extension PriceRecord {
+    func mapToPrice() -> Price {
+        return Price(
+            price: price,
+            priceChangePercentage24h: priceChangePercentage24h
+        )
+    }
+    
+    func mapToAssetPrice() -> AssetPrice {
+        return AssetPrice(
+            assetId: assetId,
+            price: price,
+            priceChangePercentage24h: priceChangePercentage24h
+        )
+    }
+}

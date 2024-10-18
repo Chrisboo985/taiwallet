@@ -1,0 +1,102 @@
+{
+  "configurations" : [
+    {
+      "id" : "D2F20471-D631-45B5-A92D-5118E9879DC4",
+      "name" : "Test Configuration",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en",
+    "region" : "US"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Blockchain",
+        "identifier" : "BlockchainTests",
+        "name" : "BlockchainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Components",
+        "identifier" : "ComponentsTests",
+        "name" : "ComponentsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Keystore",
+        "identifier" : "KeystoreTests",
+        "name" : "KeystoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Primitives",
+        "identifier" : "PrimitivesTests",
+        "name" : "PrimitivesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Store",
+        "identifier" : "StoreTests",
+        "name" : "StoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Style",
+        "identifier" : "StyleTests",
+        "name" : "StyleTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/QRScanner",
+        "identifier" : "QRScannerTests",
+        "name" : "QRScannerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Signer",
+        "identifier" : "SignerTests",
+        "name" : "SignerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/GemAPI",
+        "identifier" : "GemAPITests",
+        "name" : "GemAPITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/SwiftHTTPClient",
+        "identifier" : "SwiftHTTPClientTests",
+        "name" : "SwiftHTTPClientTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/WalletCorePrimitives",
+        "identifier" : "WalletCorePrimitivesTests",
+        "name" : "WalletCorePrimitivesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/GemstonePrimitives",
+        "identifier" : "GemstonePrimitivesTests",
+        "name" : "GemstonePrimitivesTests"
+      }
+    }
+  ],
+  "version" : 1
+}
