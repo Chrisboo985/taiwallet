@@ -100,8 +100,10 @@ struct CardView: View {
     }
 }
 
+// 修改预览代码，添加环境对象
 struct DiscoveryPage_Previews: PreviewProvider {
     static var previews: some View {
         DiscoveryPage()
+            .environmentObject(BaseLanguage()) // 传递 BaseLanguage 实例
     }
 }
