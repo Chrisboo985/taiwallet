@@ -66,9 +66,13 @@ struct MainTabView: View {
             .badge(transactions)
             .tag(TabItem.activity)
             
-            DiscoveryPage().tabItem {
+            NavigationStack {
+                DiscoveryPage()
+            }
+                .tabItem {
                 tabItem(lang.discovery, Image(.tabActivity))
-            }.tag(TabItem.discovery)
+            }
+                .tag(TabItem.discovery)
             
             SettingsNavigationStack(
                 currencyModel: CurrencySceneViewModel(),

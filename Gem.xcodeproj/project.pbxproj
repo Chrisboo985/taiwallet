@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		27725BEC2CBEAF9700F58AED /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27725BEB2CBEAF8C00F58AED /* Int.swift */; };
 		27725BED2CBEAF9700F58AED /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27725BEB2CBEAF8C00F58AED /* Int.swift */; };
+		27A805042CC6A49100F6067E /* MultitabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805022CC6A49100F6067E /* MultitabPage.swift */; };
+		27A805052CC6A49100F6067E /* ConnectionManagementPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */; };
+		27A805062CC6A49100F6067E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805032CC6A49100F6067E /* WebView.swift */; };
+		27A805072CC6A49100F6067E /* MultitabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805022CC6A49100F6067E /* MultitabPage.swift */; };
+		27A805082CC6A49100F6067E /* ConnectionManagementPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */; };
+		27A805092CC6A49100F6067E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805032CC6A49100F6067E /* WebView.swift */; };
 		27EFE4BD2CC09F5C0087FD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */; };
 		27EFE4BE2CC09F5C0087FD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */; };
 		27EFE4C22CC130F50087FD43 /* DiscoveryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4C12CC130E60087FD43 /* DiscoveryPage.swift */; };
@@ -623,6 +629,9 @@
 
 /* Begin PBXFileReference section */
 		27725BEB2CBEAF8C00F58AED /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManagementPage.swift; sourceTree = "<group>"; };
+		27A805022CC6A49100F6067E /* MultitabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultitabPage.swift; sourceTree = "<group>"; };
+		27A805032CC6A49100F6067E /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27EFE4C12CC130E60087FD43 /* DiscoveryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryPage.swift; sourceTree = "<group>"; };
 		27EFE4C52CC15DFC0087FD43 /* BaseLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLanguage.swift; sourceTree = "<group>"; };
@@ -1046,6 +1055,9 @@
 			isa = PBXGroup;
 			children = (
 				27EFE4C12CC130E60087FD43 /* DiscoveryPage.swift */,
+				27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */,
+				27A805022CC6A49100F6067E /* MultitabPage.swift */,
+				27A805032CC6A49100F6067E /* WebView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -2840,6 +2852,9 @@
 				C3D1C4F22A357AC3006E8EEA /* CopyType.swift in Sources */,
 				C3549B3729C439DF00B4BE01 /* AssetSceneViewModel.swift in Sources */,
 				C3549B3F29C51AA000B4BE01 /* PriceViewModel.swift in Sources */,
+				27A805072CC6A49100F6067E /* MultitabPage.swift in Sources */,
+				27A805082CC6A49100F6067E /* ConnectionManagementPage.swift in Sources */,
+				27A805092CC6A49100F6067E /* WebView.swift in Sources */,
 				D8CD362D2C6D504600E18764 /* LatencyViewModel.swift in Sources */,
 				D89D69012A9D769400EA74EE /* TransactionsList.swift in Sources */,
 				C3D1C4FC2A3CD5EA006E8EEA /* DiscoverAssetsService.swift in Sources */,
@@ -3141,6 +3156,9 @@
 				D8C4A3322C8A7B14006FABE8 /* ChartPriceView.swift in Sources */,
 				D8C4A3332C8A7B14006FABE8 /* SelectAssetType.swift in Sources */,
 				D8C4A3342C8A7B14006FABE8 /* AddTokenViewModel.swift in Sources */,
+				27A805042CC6A49100F6067E /* MultitabPage.swift in Sources */,
+				27A805052CC6A49100F6067E /* ConnectionManagementPage.swift in Sources */,
+				27A805062CC6A49100F6067E /* WebView.swift in Sources */,
 				D8C4A3352C8A7B14006FABE8 /* CopyType.swift in Sources */,
 				D8C4A3362C8A7B14006FABE8 /* AssetSceneViewModel.swift in Sources */,
 				D8C4A3372C8A7B14006FABE8 /* PriceViewModel.swift in Sources */,
