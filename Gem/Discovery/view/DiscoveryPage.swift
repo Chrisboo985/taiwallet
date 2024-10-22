@@ -2,16 +2,11 @@
 
 import SwiftUI
 
-
-struct IconModel {
-    let name: String
-    let icon: String
-}
-
 struct ApplicationModel {
-    let title: String
-    let icon: String
-    let content: String
+    var title: String?
+    var icon: String?
+    var content: String?
+    var link: String?
 }
 
 struct WalletModel {
@@ -32,9 +27,9 @@ struct DiscoveryPage: View {
     @State private var isGoToConnectionManagementPageView = false
     @State private var currentTab = 0
     let images = ["header1", "header2", "header3"]
-    @State private var icons: [IconModel] = [
-        IconModel(name: "Baidu", icon: "baidu"),
-        IconModel(name: "Google", icon: "google")
+    @State private var icons: [ApplicationModel] = [
+        ApplicationModel(title: "Baidu", icon: "baidu", link: "https://www.baidu.com"),
+        ApplicationModel(title: "Google", icon: "google", link: "https://www.google.com")
     ]
     @State private var applications: [ApplicationModel] = [
         ApplicationModel(title: "Baidu", icon: "baidu", content: "Baidu is a search engine"),
@@ -59,7 +54,7 @@ struct DiscoveryPage: View {
         WalletModel(icon: "google", title: "Google", content: "Google is a search engine", key: "TTbTNNmo4nBPdGXRdgGvYKEmEasD12", isSelected: true),
         WalletModel(icon: "baidu", title: "Baidu2", content: "Baidu is a search engine", key: "TTbTNNmo4nBPdGXRdgGvYKEmEFpkeadfjl"),
     ]
-    @State var selectedTab: selectedTab? = nil
+    @State var selectedTab: SelectedTab? = nil
     @State var isShowWebView: Bool = false
     @State var showWebViewPopover: Bool = false
     @State var urlString: String = ""
@@ -77,14 +72,21 @@ struct DiscoveryPage: View {
     @State private var isInSearchFullViewShow: Bool = false
     @State private var homePageScreenshot: UIImage? = nil
     @GestureState private var dragOffset = CGSize.zero
-    @State private var collectionList: [CollectionModel] = [
-        CollectionModel(title: "Baidu", icon: "baidu", url: "http://www.baidu.com"),
-        CollectionModel(title: "Google", icon: "google", url: "http://www.google.com"),
-        CollectionModel(title: "Bing", icon: "bing", url: "http://www.bing.com"),
+    @State private var collectionList: [ApplicationModel] = [
+        ApplicationModel(title: "Baidu", icon: "baidu", link: "http://www.baidu.com"),
+        ApplicationModel(title: "Google", icon: "google", link: "http://www.google.com"),
+        ApplicationModel(title: "Bing", icon: "bing", link: "http://www.bing.com"),
     ]
+    @Environment(\.navigationState) private var navigationState
+    private var navigationPath: Binding<NavigationPath> {
+        Binding(
+            get: { navigationState.wallet },
+            set: { navigationState.wallet = $0 }
+        )
+    }
     
     var body: some View {
-//        NavigationView {
+        NavigationStack(path: navigationPath) {
             ZStack {
                 ScrollView {
                     VStack(alignment: .center, spacing: 0)  {
@@ -124,8 +126,8 @@ struct DiscoveryPage: View {
                 
                 if let url = URL(string: urlString) {
                     WebViewHavenHeader(url: url)
-//                        .opacity(isShowWebView ? 1 : 0)
-//                        .scaleEffect(isShowWebView ? 1 : 0)
+                    //                        .opacity(isShowWebView ? 1 : 0)
+                    //                        .scaleEffect(isShowWebView ? 1 : 0)
                         .offset(x: isShowWebView ? 0 : UIScreen.main.bounds.width)
                         .animation(.spring(duration: 0.2), value: isShowWebView)
                 }
@@ -145,7 +147,7 @@ struct DiscoveryPage: View {
                     .animation(.spring, value: showPopover)
                 
                 switchWalletSheetView
-//                    .opacity(showBottomSheet ? 1 : 0)
+                //                    .opacity(showBottomSheet ? 1 : 0)
                     .offset(x: showBottomSheet ? 0 : UIScreen.main.bounds.width)
                     .animation(.spring, value: showBottomSheet)
                 
@@ -157,10 +159,8 @@ struct DiscoveryPage: View {
                     .animation(.spring, value: showWebViewPopover)
                 
                 
-                
-                
                 searchFullView
-//                    .opacity(isShowFullSearchView ? 1 : 0)
+                //                    .opacity(isShowFullSearchView ? 1 : 0)
                     .offset(x: isShowFullSearchView ? 0 : UIScreen.main.bounds.width)
                     .animation(.spring, value: isShowFullSearchView)
                     .onChange(of: isShowFullSearchView, initial: false) { old, newValue in
@@ -174,7 +174,7 @@ struct DiscoveryPage: View {
                 if let url = URL(string: urlStringGoogle) {
                     WebViewHavenHeader(url: url)
                         .opacity(isShowWebView ? 1 : 0)
-//                        .scaleEffect(isShowWebView ? 1 : 0)
+                    //                        .scaleEffect(isShowWebView ? 1 : 0)
                         .offset(x: isShowWebView ? 0 : UIScreen.main.bounds.width)
                         .animation(.spring(duration: 0.2), value: isShowWebView)
                 }
@@ -184,20 +184,20 @@ struct DiscoveryPage: View {
                 }
                 
             }
-//        }
-        .navigationDestination(isPresented: $isGoToMultitabPageView) {
-            if let selectedTab {
-                MultitabPageView(selectedTab: selectedTab, openedTabPage: $openedTabPage, homePpageScreenshot: homePageScreenshot, collectionList: $collectionList)
+            //        }
+            //        .navigationDestination(isPresented: $isGoToMultitabPageView) {
+            //            if let selectedTab {
+            //                MultitabPageView(selectedTab: selectedTab, openedTabPage: $openedTabPage, homePpageScreenshot: homePageScreenshot, collectionList: $collectionList)
+            //            }
+            //        }
+            .navigationDestination(isPresented: $isGoToConnectionManagementPageView) {
+                ConnectionManagementPageView()
             }
+            .onAppear {
+                homePageScreenshot = saveScreenShot()
+            }
+            .navigationBarBackButtonHidden()
         }
-        .navigationDestination(isPresented: $isGoToConnectionManagementPageView) {
-            ConnectionManagementPageView()
-        }
-        .onAppear {
-            homePageScreenshot = saveScreenShot()
-        }
-        .navigationBarBackButtonHidden()
-        
         
         //        .overlay {
         //            if homePpageScreenshot != nil {
@@ -241,21 +241,25 @@ struct DiscoveryPage: View {
                 .foregroundColor(scrollOffset < -100 ? .black : .white)
             Spacer()
             
-            Button {
-                selectedTab = .multitab
-                isShowAlert = true
-                if !isFirstOpenURL {
-                    isGoToMultitabPageView.toggle()
-                }
-            } label: {
-                Image(systemName: "1.square")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-                    .padding(.horizontal, 4)
-                    .foregroundColor(scrollOffset < -100 ? .black : .white)
-            }
-            
+//            Button {
+//                selectedTab = .multitab
+//                isShowAlert = true
+//                if !isFirstOpenURL {
+//                    isGoToMultitabPageView.toggle()
+//                }
+//                selectedTab = .multitab
+//                isShowAlert = true
+//                isGoToMultitabPageView = true
+//                showPopover = false
+//            } label: {
+//
+//            }
+            multiPageLink(child: Image(systemName: "1.square")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 18, height: 18)
+                .padding(.horizontal, 4)
+                .foregroundColor(scrollOffset < -100 ? .black : .white))
             
             
             Button(action: {
@@ -377,7 +381,7 @@ struct DiscoveryPage: View {
                 Button {
                     urlString = ""
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        urlString = "http://www.baidu.com"
+                        urlString = "https://www.baidu.com"
                     }
                     isShowAlert = false
                     isShowWebView = true
@@ -395,9 +399,6 @@ struct DiscoveryPage: View {
                         .cornerRadius(6)
                 }
             }
-            
-            
-            
         }
         .padding(12)
         .background(.white)
@@ -536,6 +537,31 @@ struct DiscoveryPage: View {
     var dynamicOpacity: Double {
         return scrollOffset < -100 ? 1.0 : Double(min(1, max(0, scrollOffset * 0.01)))
     }
+    
+    func multiPageLink(child: some View,
+                        selectedTab: SelectedTab = .multitab) -> some View {
+        NavigationLink(destination: {
+            MultitabPageView(selectedTab: selectedTab,
+                             openedTabPage: $openedTabPage,
+                             homePpageScreenshot: homePageScreenshot,
+                             collectionList: $collectionList)
+        }, label: { child })
+    }
+    
+    func webViewLink(child: some View, model: ApplicationModel) -> some View {
+//        NavigationLink(destination: {
+//            var t: WebView?
+//            if /*let link = model.link, */let url = URL(string: "https://www.google.com") {
+//                t = WebView(url: url)
+//            }
+//            return t
+//        }, label: { child })
+        Button(action: {
+            guard let link = model.link, let _ = URL(string: link) else { return }
+            urlString = link
+            isShowWebView = true
+        }, label: { child })
+    }
 }
 
 // MARK: Carousel map
@@ -577,73 +603,67 @@ extension DiscoveryPage {
                 }
                 .padding(.horizontal, 12)
             
-            
-            
             VStack(alignment: .leading, spacing: 0)  {
                 
                 selectedView
                 
-                Group {
-                    if isSelectedCollection {
-                        Group {
-                            if collectionList.isEmpty {
-                                HStack(alignment: .center, spacing: 12)  {
-                                    Image(systemName: "star.fill")
-                                        .foregroundColor(.yellow)
-                                    Text("如何收藏应用？")
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                }
-                                .padding()
-                                .background(.white)
-                                .cornerRadius(10)
-                                .padding(1)
-                                .background(.gray.opacity(0.2))
-                                .cornerRadius(10)
-                            } else {
-                                HStack(alignment: .center, spacing: 18)  {
-                                    ForEach(collectionList, id: \.title) { item in
-                                        VStack {
-                                            Image(item.icon)
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 28, height: 28)
-                                            Text(item.title)
-                                                .font(.footnote)
-                                                .foregroundColor(.black)
-                                                .lineLimit(1)
-                                        }
-                                    }
-                                    Spacer()
-                                }
+                if isSelectedCollection {
+                    Group {
+                        if collectionList.isEmpty {
+                            HStack(alignment: .center, spacing: 12)  {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                                Text("如何收藏应用？")
+                                    .font(.subheadline)
+                                    .foregroundColor(.black)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
                             }
-                        }
-                            .offset(y: 14)
-                    } else {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 18) {
-                                ForEach(icons, id: \.name) { icon in
+                            .padding()
+                            .background(.white)
+                            .cornerRadius(10)
+                            .padding(1)
+                            .background(.gray.opacity(0.2))
+                            .cornerRadius(10)
+                        } else {
+                            HStack(alignment: .center, spacing: 18)  {
+                                ForEach(collectionList, id: \.title) { (item: ApplicationModel) in
                                     VStack {
-                                        Image(icon.icon)
+                                        Image(item.icon ?? "")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 28, height: 28)
-                                            .clipShape(Circle())
-                                        Text(icon.name)
+                                        Text(item.title ?? "")
                                             .font(.footnote)
                                             .foregroundColor(.black)
-                                    }
-                                    .onTapGesture {
-                                        print(icon.name)
+                                            .lineLimit(1)
                                     }
                                 }
+                                Spacer()
                             }
                         }
-                        .offset(y: 14)
                     }
+                    .offset(y: 14)
+                    
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 18) {
+                            ForEach(icons, id: \.title) { (app: ApplicationModel) in
+                                webViewLink(child: VStack {
+                                    Image(app.icon ?? "")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 28, height: 28)
+                                        .clipShape(Circle())
+                                    Text(app.title ?? "")
+                                        .font(.footnote)
+                                        .foregroundColor(.black)
+                                }, model: app)
+                            }
+                        }
+                    }
+                    .offset(y: 14)
                 }
                 
             }
@@ -652,7 +672,6 @@ extension DiscoveryPage {
             .background(.white)
             .cornerRadius(12)
             .padding(.horizontal, 12)
-            
             
             recommendedApplication
         }
@@ -711,22 +730,22 @@ extension DiscoveryPage {
             
             ScrollView {
                 VStack(alignment: .center, spacing: 12)  {
-                    ForEach(applications, id: \.title) { app in
-                        HStack(alignment: .center, spacing: 12)  {
-                            Image(app.icon)
+                    ForEach(applications, id: \.title) { (app: ApplicationModel) in
+                        webViewLink(child: HStack(alignment: .center, spacing: 12)  {
+                            Image(app.icon ?? "")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 25, height: 25)
                             VStack(alignment: .leading, spacing: 0)  {
-                                Text(app.title)
+                                Text(app.title ?? "")
                                     .bold()
-                                Text(app.content)
+                                Text(app.content ?? "")
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                             }
                             Spacer()
                         }
-                        .padding(.leading, 12)
+                        .padding(.leading, 12), model: app)
                     }
                     Spacer(minLength: applications.count < 10 ? UIScreen.main.bounds.height * 0.3 : 0)
                 }
@@ -919,9 +938,6 @@ extension DiscoveryPage {
             popoverButton(title: "关闭当前标签页", icon: "xmark.circle", action: {
                 showWebViewPopover = false
             })
-            
-            
-            
             
         }
         .background(.white)

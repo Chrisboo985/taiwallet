@@ -15,6 +15,8 @@
 		27A805072CC6A49100F6067E /* MultitabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805022CC6A49100F6067E /* MultitabPage.swift */; };
 		27A805082CC6A49100F6067E /* ConnectionManagementPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */; };
 		27A805092CC6A49100F6067E /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A805032CC6A49100F6067E /* WebView.swift */; };
+		27A8050C2CC7183300F6067E /* NavigationControllerAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8050B2CC7183000F6067E /* NavigationControllerAccessor.swift */; };
+		27A8050D2CC7183300F6067E /* NavigationControllerAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8050B2CC7183000F6067E /* NavigationControllerAccessor.swift */; };
 		27EFE4BD2CC09F5C0087FD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */; };
 		27EFE4BE2CC09F5C0087FD43 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */; };
 		27EFE4C22CC130F50087FD43 /* DiscoveryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFE4C12CC130E60087FD43 /* DiscoveryPage.swift */; };
@@ -632,6 +634,7 @@
 		27A805012CC6A49100F6067E /* ConnectionManagementPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManagementPage.swift; sourceTree = "<group>"; };
 		27A805022CC6A49100F6067E /* MultitabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultitabPage.swift; sourceTree = "<group>"; };
 		27A805032CC6A49100F6067E /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		27A8050B2CC7183000F6067E /* NavigationControllerAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerAccessor.swift; sourceTree = "<group>"; };
 		27EFE4BC2CC09F5A0087FD43 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27EFE4C12CC130E60087FD43 /* DiscoveryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryPage.swift; sourceTree = "<group>"; };
 		27EFE4C52CC15DFC0087FD43 /* BaseLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLanguage.swift; sourceTree = "<group>"; };
@@ -1043,6 +1046,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		27A8050A2CC7182500F6067E /* BaseClass */ = {
+			isa = PBXGroup;
+			children = (
+				27A8050B2CC7183000F6067E /* NavigationControllerAccessor.swift */,
+			);
+			path = BaseClass;
+			sourceTree = "<group>";
+		};
 		27EFE4BF2CC0A14D0087FD43 /* Discovery */ = {
 			isa = PBXGroup;
 			children = (
@@ -1207,6 +1218,7 @@
 		C30952B2299C39D70004C0F9 /* Gem */ = {
 			isa = PBXGroup;
 			children = (
+				27A8050A2CC7182500F6067E /* BaseClass */,
 				27725BEA2CBEAF8000F58AED /* Extensions */,
 				D8C4A3812C9388AC006FABE8 /* Price Alerts */,
 				D85620282AAB89B000D65D81 /* Core */,
@@ -2653,6 +2665,7 @@
 				830FDA452C224316003DA605 /* NavigationStateManager.swift in Sources */,
 				D8D203CB2ADDFB9600261CA2 /* TransactionDateFormatter.swift in Sources */,
 				C37482072A8AC808008A5F0E /* LockScreenScene.swift in Sources */,
+				27A8050D2CC7183300F6067E /* NavigationControllerAccessor.swift in Sources */,
 				C3E99BD52A7A1D44005DF35F /* SecurityViewModel.swift in Sources */,
 				D847E3512ABCD49C00A56F07 /* TransactionsService.swift in Sources */,
 				D8B978022AAA4C28009933B5 /* NotificationsViewModel.swift in Sources */,
@@ -2957,6 +2970,7 @@
 				D8C4A2732C8A7B14006FABE8 /* AssetTitleView.swift in Sources */,
 				D8C4A2742C8A7B14006FABE8 /* BalanceViewModel.swift in Sources */,
 				D8C4A2752C8A7B14006FABE8 /* WalletService.swift in Sources */,
+				27A8050C2CC7183300F6067E /* NavigationControllerAccessor.swift in Sources */,
 				D852CB052CA32B14004121D3 /* PriceAlertService.swift in Sources */,
 				D8C4A2762C8A7B14006FABE8 /* TransactionService.swift in Sources */,
 				D8C4A2772C8A7B14006FABE8 /* NameResolveView.swift in Sources */,

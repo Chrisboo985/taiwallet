@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum selectedTab {
+enum SelectedTab {
     case multitab
     case collection
     case history
@@ -13,80 +13,44 @@ struct TabPageMode {
     var isHouse: Bool = false
 }
 
-
-struct CollectionModel {
-    let id: String = UUID().uuidString
-    let title: String
-    let icon: String
-    let url: String
-}
-
 struct MultitabPageView: View {
-    @State var selectedTab: selectedTab
+    @State var selectedTab: SelectedTab
     @Environment(\.presentationMode) var presentation
     // gradient
     let gradient = Gradient(colors: [
-        Color(red: 0.567, green: 0.765, blue: 0.978), Color(red: 0.561, green: 0.429, blue: 0.819)])
+        Color(red: 0.567, green: 0.765, blue: 0.978), Color(red: 0.561, green: 0.429, blue: 0.819)
+    ])
     @Binding var openedTabPage: [TabPageMode]
     @State var homePpageScreenshot: UIImage?
-    @GestureState private var dragOffset = CGSize.zero
-    @Binding var collectionList: [CollectionModel]
+//    @GestureState private var dragOffset = CGSize.zero
+    @Binding var collectionList: [ApplicationModel]
     
     var body: some View {
-        VStack(alignment: .center, spacing: 0)  {
-            header
-            ScrollView {
-                switch selectedTab {
-                case .multitab:
-                    multitabView
-                case .collection:
-                    collectionView
-                case .history:
-                    historyView
-                }
-            }
-            foot
-        }
-        .background(Color(red: 0.964, green: 0.964, blue: 0.979))
-        .navigationBarBackButtonHidden()
-        // 添加手势识别
-        .gesture(
-            DragGesture()
-                .updating($dragOffset) { value, state, _ in
-                    state = value.translation
-                }
-                .onChanged { value in
-                    // 检查手势起始位置是否在左边缘
-                    if value.startLocation.x < 50 { // 50是左边缘的阈值
-                        if value.translation.width > 100 {
-                            withAnimation(.spring) {
-                                presentation.wrappedValue.dismiss()
-                            }
-                        }
+        NavigationStack(root: {
+            VStack(alignment: .leading, spacing: 0) {
+                ScrollView {
+                    switch selectedTab {
+                    case .multitab:
+                        multitabView
+                    case .collection:
+                        collectionView
+                    case .history:
+                        historyView
                     }
                 }
-        )
+                foot
+            }
+            .background(Color(red: 0.964, green: 0.964, blue: 0.979))
+        }).toolbar(content: {
+            header
+        })
     }
     
     var header: some View {
-        ZStack(alignment: .center) {
-            HStack(alignment: .center, spacing: 0)  {
-                Image(systemName: "chevron.left")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .padding(12)
-            .offset(y: -2)
-            .onTapGesture {
-                presentation.wrappedValue.dismiss()
-            }
-            
-            
-            VStack(alignment: .center, spacing: 0)  {
-                HStack(alignment: .center, spacing: 18)  {
+        ZStack(content: {
+            VStack(spacing: 0) {
+                HStack(alignment: .center, spacing: 18) {
+                    Spacer() // 添加 Spacer() 保证内容居中
                     Text("多标签页")
                         .foregroundColor(selectedTab == .multitab ? .black : .gray)
                         .onTapGesture {
@@ -98,12 +62,13 @@ struct MultitabPageView: View {
                         .onTapGesture {
                             selectedTab = .collection
                         }
-                    
+                     
                     Text("浏览记录")
                         .foregroundColor(selectedTab == .history ? .black : .gray)
                         .onTapGesture {
                             selectedTab = .history
                         }
+                    Spacer() // 添加 Spacer() 保证内容居中
                 }
                 
                 RoundedRectangle(cornerRadius: 4)
@@ -111,17 +76,15 @@ struct MultitabPageView: View {
                     .frame(width: selectedTab == .collection ? 30 : 65, height: 3)
                     .padding(.top, 8)
                     .offset(x: selectedTab == .collection ? 0 : selectedTab == .multitab ? -68 : 68)
-                    .animation(.spring)
-                
+                    .animation(.easeOut, value: selectedTab)
             }
-        }
-        .background(.white)
+        })
+        .background(.clear)
     }
     
-    
     func bodyItem(item: TabPageMode, closeAction: @escaping (String) -> Void) -> some View {
-        VStack(alignment: .center, spacing: 0)  {
-            HStack(alignment: .center, spacing: 4)  {
+        VStack(alignment: .center, spacing: 0) {
+            HStack(alignment: .center, spacing: 4) {
                 Group {
                     if item.isHouse {
                         Image(systemName: "house")
@@ -152,7 +115,6 @@ struct MultitabPageView: View {
             .background(.white)
             
             Spacer()
-            
         }
         //        .background(.gray)
         .background {
@@ -169,11 +131,10 @@ struct MultitabPageView: View {
         .background(gradient)
         .cornerRadius(12)
         .frame(width: UIScreen.main.bounds.width * 0.45, height: UIScreen.main.bounds.height * 0.3)
-        
-        
     }
+    
     var multitabView: some View {
-        VStack(alignment: .center, spacing: 0)  {
+        VStack(alignment: .center, spacing: 0) {
             //            HStack(alignment: .center, spacing: 12)  {
             //                bodyItem()
             //                bodyItem()
@@ -189,13 +150,14 @@ struct MultitabPageView: View {
         }
         .padding(12)
     }
+
     var collectionView: some View {
-        VStack(alignment: .center, spacing: 0)  {
+        VStack(alignment: .center, spacing: 0) {
             if collectionList.isEmpty {
                 emptyCollectionView
             } else {
-                VStack(alignment: .center, spacing: 12)  {
-                    ForEach(collectionList, id: \.id) { item in
+                VStack(alignment: .center, spacing: 12) {
+                    ForEach(collectionList, id: \.link) { item in
                         collectionViewItem(item: item)
                     }
                     Spacer()
@@ -204,17 +166,18 @@ struct MultitabPageView: View {
         }
         .padding(12)
     }
+    
     var historyView: some View {
-        VStack(alignment: .center, spacing: 12)  {
-            HStack(alignment: .center, spacing: 0)  {
+        VStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .center, spacing: 0) {
                 Text("2024年10月16日 星期三")
                     .bold()
                     .foregroundColor(.gray)
                 Spacer()
             }
             
-            VStack(alignment: .center, spacing: 4)  {
-                ForEach(0...10, id: \.self) { _ in
+            VStack(alignment: .center, spacing: 4) {
+                ForEach(0 ... 10, id: \.self) { _ in
                     historyViewItem()
                 }
             }
@@ -225,7 +188,7 @@ struct MultitabPageView: View {
     }
     
     var emptyCollectionView: some View {
-        VStack(alignment: .center, spacing: 0)  {
+        VStack(alignment: .center, spacing: 0) {
             Spacer(minLength: UIScreen.main.bounds.height * 0.28)
             Image("noCollection")
                 .resizable()
@@ -236,16 +199,15 @@ struct MultitabPageView: View {
                 .bold()
             Spacer()
         }
-        
     }
     
     func historyViewItem() -> some View {
-        HStack(alignment: .center, spacing: 12)  {
+        HStack(alignment: .center, spacing: 12) {
             Image("baidu")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-            VStack(alignment: .leading, spacing: 0)  {
+            VStack(alignment: .leading, spacing: 0) {
                 Text("百度一下，你就知道")
                     .bold()
                 Text("https://www.baidu.com")
@@ -253,7 +215,7 @@ struct MultitabPageView: View {
                     .font(.footnote)
             }
             Spacer()
-            VStack(alignment: .center, spacing: 0)  {
+            VStack(alignment: .center, spacing: 0) {
                 Text("10:30")
                     .font(.footnote)
                     .foregroundColor(.gray)
@@ -264,9 +226,10 @@ struct MultitabPageView: View {
         .background(.white)
         .cornerRadius(8)
     }
-    func collectionViewItem(item: CollectionModel) -> some View {
-        HStack(alignment: .center, spacing: 12)  {
-            Image(item.icon)
+
+    func collectionViewItem(item: ApplicationModel) -> some View {
+        HStack(alignment: .center, spacing: 12) {
+            Image(item.icon ?? "")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 16, height: 16)
@@ -276,10 +239,10 @@ struct MultitabPageView: View {
                 .padding(0.5)
                 .background(.gray.opacity(0.5))
                 .cornerRadius(10)
-            VStack(alignment: .leading, spacing: 0)  {
-                Text(item.title)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(item.title ?? "")
                     .bold()
-                Text(item.url)
+                Text(item.link ?? "")
                     .foregroundColor(.gray)
                     .font(.footnote)
             }
@@ -296,7 +259,7 @@ struct MultitabPageView: View {
     }
     
     var foot: some View {
-        HStack(alignment: .center, spacing: 0)  {
+        HStack(alignment: .center, spacing: 0) {
             Image("broom")
                 .resizable()
                 .scaledToFit()
@@ -311,5 +274,28 @@ struct MultitabPageView: View {
         .padding(.horizontal, 12)
         .padding(12)
         .background(.white)
+    }
+}
+
+struct MultitabPageView_Previews: PreviewProvider {
+    @State static var openedTabPage = [
+        TabPageMode(title: "首页", icon: "house.fill", isHouse: true),
+        TabPageMode(title: "新闻", icon: "newspaper"),
+        TabPageMode(title: "购物", icon: "cart.fill")
+    ]
+    
+    @State static var collectionList = [
+        ApplicationModel(title: "百度", icon: "baidu", link: "https://www.baidu.com"),
+        ApplicationModel(title: "谷歌", icon: "google", link: "https://www.google.com")
+    ]
+    
+    static var previews: some View {
+        NavigationStack(root: {
+            MultitabPageView(
+                selectedTab: .multitab,
+                openedTabPage: $openedTabPage,
+                collectionList: $collectionList
+            )
+        })
     }
 }
